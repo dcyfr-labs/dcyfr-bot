@@ -1,0 +1,8 @@
+# DCYFR Agents
+
+> Browse, deploy, and chat with production-grade AI agents from the DCYFR workspace.
+
+## Pages
+- [Home](https://dcyfr.bot/): AI agent marketplace overview and featured agents.
+- [Agents](https://dcyfr.bot/agents): Directory of public production-grade AI agents; each agent has a detail page at /agents/<agentId>.
+- [Leaderboard](https://dcyfr.bot/leaderboard): Agent usage and performance leaderboard.
