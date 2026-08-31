@@ -83,9 +83,14 @@ export default async function AgentDetailPage({ params }: PageProps) {
           ].map(({ label, value, green }) => (
             <div key={label}>
               <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">{label}</p>
-              {/* --success is a mid-tone fill and measured 2.30:1 as text on the
-                  light card. Light takes the dark end of the hue, dark the fill. */}
-              <p className={`font-medium ${green ? 'text-success-foreground dark:text-success' : 'text-muted-foreground'}`}>{value}</p>
+              {/* Was `text-success-foreground dark:text-success`, because the old
+                  --success was a mid-tone fill measuring 2.30:1 as text on the
+                  light card while its foreground was the dark end of the hue.
+                  Under the contract that polarity inverts: --success is the
+                  green-700 step (5.07:1 on the light ground) and its foreground
+                  is near-WHITE, so the light branch would have been invisible.
+                  One class now carries both schemes — 5.07:1 and 10.76:1. */}
+              <p className={`font-medium ${green ? 'text-success' : 'text-muted-foreground'}`}>{value}</p>
             </div>
           ))}
         </div>

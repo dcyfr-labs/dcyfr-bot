@@ -162,10 +162,13 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           aria-label="Message input"
           maxLength={2000}
         />
-        {/* text-foreground is the PAGE text color, not the pair for bg-primary:
-            in dark it is near-white on a light-violet fill. text-primary-foreground
-            is the token defined for this ground. hover:bg-primary was also
-            identical to the base, so the button had no hover affordance at all. */}
+        {/* text-foreground is the PAGE text color, not the pair for bg-primary.
+            It was near-white on the old light-violet fill; under the theme
+            contract the two are the SAME value in dark (both hsl(210 40% 98%)),
+            so the label would not be low-contrast, it would be gone.
+            text-primary-foreground is the token defined for this ground.
+            hover:bg-primary was also identical to the base, so the button had no
+            hover affordance at all. */}
         <button
           onClick={() => void handleSend()}
           disabled={isLoading || !input.trim()}

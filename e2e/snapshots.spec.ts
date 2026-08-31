@@ -9,8 +9,14 @@ import { test, expect } from '@playwright/test';
  * - `/agents` full directory (primary marketplace surface)
  *
  * Both at desktop (1440×900) and mobile (375×812). Motion paused.
- * colorScheme:'dark' locks baselines to dark-mode render (bot site is
- * dark-default; matches Tailwind's violet-950 canvas).
+ * colorScheme:'dark' locks baselines to the dark-mode render, because the site
+ * is dark-default. The canvas was violet-950 under the old identity and is
+ * slate's navy after the theme-engine adoption.
+ *
+ * Note what this does NOT cover: light mode is entirely ungated here. That is
+ * the scheme where a token regression is most likely to hide, since the theme
+ * contract flips the polarity of every *-foreground in light and leaves dark
+ * largely alone.
  */
 
 const VIEWPORTS = [

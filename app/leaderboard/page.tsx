@@ -73,10 +73,12 @@ export default function LeaderboardPage() {
                     <td className="px-4 py-3 text-right text-muted-foreground hidden md:table-cell">{rep.totalRatings.toLocaleString()}</td>
                     <td className="px-4 py-3 text-right text-muted-foreground hidden md:table-cell">{rep.avgRating.toFixed(1)}</td>
                     <td className="px-4 py-3 text-right hidden lg:table-cell">
-                      {/* --success is a mid-tone fill: as text on the light
-                          table it measured 2.30:1. The *-foreground end of the
-                          hue carries light, the fill carries dark. */}
-                      <span className="text-success-foreground dark:text-success">{(rep.successRate * 100).toFixed(0)}%</span>
+                      {/* One class rather than the old scheme-split pair: under
+                          the contract --success is the green-700 step, readable
+                          as text on both grounds (5.07:1 / 10.76:1). Its
+                          foreground went near-white, so the light half of the
+                          old pair would have vanished on the light table. */}
+                      <span className="text-success">{(rep.successRate * 100).toFixed(0)}%</span>
                     </td>
                   </tr>
                 );
