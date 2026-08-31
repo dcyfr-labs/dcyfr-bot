@@ -107,7 +107,7 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
   }
 
   return (
-    <div className="bg-card/20 border border-border/80/30 rounded-xl overflow-hidden">
+    <div className="bg-card/20 border border-border/30 rounded-xl overflow-hidden">
       <div className="bg-background/60 border-b border-border/40 px-4 py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs text-muted-foreground">
         <span>Preview mode — read/search/web tools only</span>
         <span>Rate limit: 100 req / hr</span>
@@ -123,8 +123,8 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
               msg.role === 'user'
-                ? 'bg-primary/70 text-foreground'
-                : 'bg-muted/50 border border-border/80/40 text-muted-foreground'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted/50 border border-border/40 text-muted-foreground'
             }`}>
               <p className="whitespace-pre-wrap">
                 {msg.content}
@@ -137,7 +137,7 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
         ))}
         {isLoading && messages.at(-1)?.role !== 'assistant' && (
           <div className="flex justify-start">
-            <div className="bg-muted/50 border border-border/80/40 rounded-lg px-4 py-3">
+            <div className="bg-muted/50 border border-border/40 rounded-lg px-4 py-3">
               <span className="flex gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-bounce [animation-delay:-0.3s]" />
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-bounce [animation-delay:-0.15s]" />
@@ -158,14 +158,18 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           placeholder={`Message ${agentId}… (Enter to send, Shift+Enter for newline)`}
           rows={2}
           disabled={isLoading}
-          className="flex-1 bg-background/60 border border-border/80/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-none focus:border-primary/50"
+          className="flex-1 bg-background/60 border border-border/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-none focus:border-primary/50"
           aria-label="Message input"
           maxLength={2000}
         />
+        {/* text-foreground is the PAGE text color, not the pair for bg-primary:
+            in dark it is near-white on a light-violet fill. text-primary-foreground
+            is the token defined for this ground. hover:bg-primary was also
+            identical to the base, so the button had no hover affordance at all. */}
         <button
           onClick={() => void handleSend()}
           disabled={isLoading || !input.trim()}
-          className="shrink-0 bg-primary hover:bg-primary disabled:bg-muted disabled:text-primary text-foreground font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="shrink-0 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground font-medium px-4 py-2 rounded-lg text-sm transition-colors"
         >
           Send
         </button>

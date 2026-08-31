@@ -25,7 +25,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-b border-border/40">
         <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-background" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 text-center">
-          <div className="inline-flex items-center gap-2 bg-muted/40 border border-primary/60/40 rounded-full px-4 py-1.5 text-sm text-muted-foreground mb-8">
+          <div className="inline-flex items-center gap-2 bg-muted/40 border border-primary/40 rounded-full px-4 py-1.5 text-sm text-muted-foreground mb-8">
             <span className="w-2 h-2 rounded-full bg-primary/80 animate-pulse" aria-hidden="true" />
             Launching Q4 2026
           </div>
@@ -40,13 +40,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/agents"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-foreground font-semibold px-8 py-3 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-3 rounded-lg transition-colors"
             >
               Browse Agents
             </Link>
             <Link
               href="/leaderboard"
-              className="inline-flex items-center gap-2 border border-primary/60/60 hover:border-primary/50 text-muted-foreground hover:text-foreground/80 font-semibold px-8 py-3 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 border border-primary/60 hover:border-primary/50 text-muted-foreground hover:text-foreground/80 font-semibold px-8 py-3 rounded-lg transition-colors"
             >
               View Leaderboard
             </Link>

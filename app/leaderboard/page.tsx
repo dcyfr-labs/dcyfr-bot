@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
         <p className="text-muted-foreground">Ranked by composite reputation score from community ratings and workspace telemetry.</p>
       </div>
 
-      <div className="bg-card/20 border border-border/80/30 rounded-xl overflow-hidden">
+      <div className="bg-card/20 border border-border/30 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -60,14 +60,23 @@ export default function LeaderboardPage() {
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground text-xs">{CATEGORY_LABELS[agent.category]}</td>
                     <td className="px-4 py-3 text-right">
-                      <span className={`font-bold text-base ${rep.score >= 95 ? 'text-muted-foreground' : rep.score >= 90 ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+                      {/* Two tiers, not three: pre-migration this read
+                          violet-300 / violet-400 / violet-400, so the >= 90
+                          branch was already dead. The identity codemod then
+                          collapsed all three onto one token, leaving a ternary
+                          that could only ever return one value. Top scorers get
+                          the emphasis the brighter violet used to carry. */}
+                      <span className={`font-bold text-base ${rep.score >= 95 ? 'text-foreground' : 'text-muted-foreground'}`}>
                         {rep.score}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right text-muted-foreground hidden md:table-cell">{rep.totalRatings.toLocaleString()}</td>
                     <td className="px-4 py-3 text-right text-muted-foreground hidden md:table-cell">{rep.avgRating.toFixed(1)}</td>
                     <td className="px-4 py-3 text-right hidden lg:table-cell">
-                      <span className="text-success">{(rep.successRate * 100).toFixed(0)}%</span>
+                      {/* --success is a mid-tone fill: as text on the light
+                          table it measured 2.30:1. The *-foreground end of the
+                          hue carries light, the fill carries dark. */}
+                      <span className="text-success-foreground dark:text-success">{(rep.successRate * 100).toFixed(0)}%</span>
                     </td>
                   </tr>
                 );
