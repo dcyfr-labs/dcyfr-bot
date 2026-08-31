@@ -6,9 +6,12 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { PageShell, SiteNav, SiteFooter } from '@/components/chrome';
 import './globals.css';
 
+// Named for the FACE, not the role. v4 emits its theme keys as real custom
+// properties, so a next/font variable called `--font-sans` collides with the
+// theme's own `--font-sans`; `@theme inline` maps the role onto this name.
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-inter',
   display: 'swap',
 });
 
