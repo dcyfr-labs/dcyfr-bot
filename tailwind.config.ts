@@ -69,6 +69,16 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      // Without these, `font-sans` and `font-mono` fall through to Tailwind's
+      // stock stacks. Those utilities sit in the utilities layer and outrank
+      // the base-layer `body { font-family: var(--font-sans) }`, so `<body
+      // className="font-sans">` meant --font-sans was never read and the
+      // next/font Inter face was loaded and preloaded while reaching no
+      // element on the page.
+      fontFamily: {
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
       transitionTimingFunction: {
         brand: 'var(--ease-brand)',
       },
