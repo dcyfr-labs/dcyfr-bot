@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:snapshots": "playwright test e2e/snapshots.spec.ts --project=chromium",
-    "test:snapshots:update": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots"
+    "test:snapshots:update": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots",
+    "test:snapshots:rebaseline": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots=all",
+    "check:theme-wiring": "node scripts/check-theme-wiring.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.1",
