@@ -6,9 +6,19 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { PageShell, SiteNav, SiteFooter } from '@/components/chrome';
 import './globals.css';
 
+// Named for the face, not the role. The theme engine binds <body> and headings
+// to --font-body / --font-display, and the theme resolves each through a
+// --font-<role>-loaded hook; globals.css points those hooks and the `font-sans`
+// utility at this one variable. Naming it for the face means three roles can
+// share it without any Tailwind theme key pointing at another, and swapping
+// Inter out later is a one-line change here.
+//
+// The role name was also unavailable: v4 emits its theme keys as real custom
+// properties, so a next/font variable called `--font-sans` collides with the
+// theme's own --font-sans, and `--font-sans: var(--font-sans)` self-references.
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -69,12 +79,24 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    // data-identity selects the theme package; the .dark class (added by
+    // ThemeProvider) selects the scheme. They are orthogonal by construction —
+    // the theme is scoped [data-identity="slate"] / [data-identity="slate"].dark
+    // — so identity and scheme cannot tie on specificity the way two single
+    // classes on this same element could. Stamped server-side, so it is present
+    // in the first paint rather than after hydration.
     <html
       lang="en"
       suppressHydrationWarning
+      data-identity="slate"
       className={`${inter.variable} theme-dcyfr-bot`}
     >
-      <body className="min-h-screen font-sans antialiased">
+      {/* `font-sans` is gone from here. The utility sets font-family in
+          @layer utilities, which outranks the engine's [data-identity] body
+          binding in @layer base — so leaving it would have made the engine's
+          type role dead while the source still looked wired. globals.css maps
+          the utility at the same face, so nothing about the rendering changes. */}
+      <body className="min-h-screen antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <PageShell
             nav={<SiteNav logo={DcyfrBotLogo} links={NAV_LINKS} />}

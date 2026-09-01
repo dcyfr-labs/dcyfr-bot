@@ -181,14 +181,17 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           placeholder={`Message ${agentId}… (Enter to send, Shift+Enter for newline)`}
           rows={2}
           disabled={isLoading}
-          className="flex-1 bg-background/60 border border-border/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-none focus:border-primary/50"
+          className="flex-1 bg-background/60 border border-border/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-hidden focus:border-primary/50"
           aria-label="Message input"
           maxLength={2000}
         />
-        {/* text-foreground is the PAGE text color, not the pair for bg-primary:
-            in dark it is near-white on a light-violet fill. text-primary-foreground
-            is the token defined for this ground. hover:bg-primary was also
-            identical to the base, so the button had no hover affordance at all. */}
+        {/* text-foreground is the PAGE text color, not the pair for bg-primary.
+            It was near-white on the old light-violet fill; under the theme
+            contract the two are the SAME value in dark (both hsl(210 40% 98%)),
+            so the label would not be low-contrast, it would be gone.
+            text-primary-foreground is the token defined for this ground.
+            hover:bg-primary was also identical to the base, so the button had no
+            hover affordance at all. */}
         <button
           onClick={() => void handleSend()}
           disabled={isLoading || !input.trim()}
