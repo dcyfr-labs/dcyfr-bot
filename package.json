@@ -8,6 +8,7 @@
     "start": "next start -p 3304",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:contrast": "playwright test e2e/contrast.spec.ts --project=chromium",
     "test:snapshots": "playwright test e2e/snapshots.spec.ts --project=chromium",
     "test:snapshots:update": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots",
     "test:snapshots:rebaseline": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots=all",

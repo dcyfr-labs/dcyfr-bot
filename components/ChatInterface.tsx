@@ -181,7 +181,7 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           placeholder={`Message ${agentId}… (Enter to send, Shift+Enter for newline)`}
           rows={2}
           disabled={isLoading}
-          className="flex-1 bg-background/60 border border-border/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-hidden focus:border-primary/50"
+          className="flex-1 bg-background/60 border border-border/40 rounded-lg px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground resize-none focus:outline-hidden focus:border-primary/50"
           aria-label="Message input"
           maxLength={2000}
         />

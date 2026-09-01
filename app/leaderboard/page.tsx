@@ -25,7 +25,7 @@ export default function LeaderboardPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-foreground/80 mb-2">Agent Leaderboard</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Agent Leaderboard</h1>
         <p className="text-muted-foreground">Ranked by composite reputation score from community ratings and workspace telemetry.</p>
       </div>
 
@@ -53,7 +53,7 @@ export default function LeaderboardPage() {
                       {MEDALS[rep.rank] ?? <span className="text-muted-foreground">#{rep.rank}</span>}
                     </td>
                     <td className="px-4 py-3">
-                      <Link href={`/agents/${rep.agentId}`} className="text-muted-foreground hover:text-foreground/80 font-medium transition-colors">
+                      <Link href={`/agents/${rep.agentId}`} className="text-muted-foreground hover:text-foreground font-medium transition-colors">
                         {agent.name}
                       </Link>
                       <p className="text-muted-foreground text-xs font-mono mt-0.5">{rep.agentId}</p>

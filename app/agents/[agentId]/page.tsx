@@ -63,7 +63,7 @@ export default async function AgentDetailPage({ params }: PageProps) {
       <div className="bg-card/30 border border-border/40 rounded-xl p-6 sm:p-8 mb-8">
         <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground/80 mb-1">{agent.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">{agent.name}</h1>
             <p className="text-muted-foreground text-sm font-mono">{agent.agentId}</p>
           </div>
           {rep && (
@@ -98,7 +98,7 @@ export default async function AgentDetailPage({ params }: PageProps) {
 
       {rep && (
         <div className="bg-card/20 border border-border/30 rounded-xl p-6 mb-8">
-          <h2 className="text-lg font-semibold text-foreground/80 mb-4">Reputation</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Reputation</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             <div><p className="text-2xl font-bold text-muted-foreground">#{rep.rank}</p><p className="text-xs text-muted-foreground mt-0.5">Rank</p></div>
             <div><p className="text-2xl font-bold text-muted-foreground">{rep.avgRating.toFixed(1)}</p><p className="text-xs text-muted-foreground mt-0.5">Avg Rating</p></div>
@@ -109,14 +109,14 @@ export default async function AgentDetailPage({ params }: PageProps) {
       )}
 
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-foreground/80 mb-3">Capabilities</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">Capabilities</h2>
         <div className="flex flex-wrap gap-2">
           {agent.capabilities.map((cap) => <CapabilityBadge key={cap} label={cap} />)}
         </div>
       </div>
 
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-foreground/80 mb-3">Skill Tags</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">Skill Tags</h2>
         <div className="flex flex-wrap gap-2">
           {agent.skillTags.map((tag) => (
             <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-muted/40 border border-border/40 text-muted-foreground">
@@ -127,7 +127,7 @@ export default async function AgentDetailPage({ params }: PageProps) {
       </div>
 
       <div className="mb-10">
-        <h2 className="text-lg font-semibold text-foreground/80 mb-3">Tools</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">Tools</h2>
         <div className="flex flex-wrap gap-2">
           {agent.tools.map((tool) => (
             <span key={tool} className="inline-flex items-center px-3 py-1 rounded-md text-xs font-mono bg-background border border-border/50 text-muted-foreground">
@@ -138,7 +138,7 @@ export default async function AgentDetailPage({ params }: PageProps) {
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-foreground/80 mb-4">Chat with {agent.name}</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">Chat with {agent.name}</h2>
         <ChatInterface agentId={agent.agentId} />
       </div>
     </div>

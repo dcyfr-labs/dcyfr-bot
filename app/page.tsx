@@ -46,7 +46,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/leaderboard"
-              className="inline-flex items-center gap-2 border border-primary/60 hover:border-primary/50 text-muted-foreground hover:text-foreground/80 font-semibold px-8 py-3 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 border border-primary/60 hover:border-primary/50 text-muted-foreground hover:text-foreground font-semibold px-8 py-3 rounded-lg transition-colors"
             >
               View Leaderboard
             </Link>
@@ -74,7 +74,7 @@ export default function HomePage() {
       {/* Featured */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-foreground/80">Top Rated Agents</h2>
+          <h2 className="text-2xl font-bold text-foreground">Top Rated Agents</h2>
           <Link href="/agents" className="text-sm text-muted-foreground hover:text-muted-foreground transition-colors">
             View all 16 →
           </Link>
