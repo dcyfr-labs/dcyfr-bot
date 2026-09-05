@@ -2,11 +2,11 @@
 
 Bot marketplace and agent directory for the DCYFR ecosystem, live at **[dcyfr.bot](https://dcyfr.bot)**.
 
-`dcyfr-bot-marketplace` is a Next.js 15 / React 19 site for the DCYFR bot marketplace: browse agents at `/agents`, view rankings at `/leaderboard`, and talk to an Anthropic-backed chat surface via `POST /api/chat`. It is part of the dcyfr-labs site family alongside [dcyfr-io](https://github.com/dcyfr-labs/dcyfr-io), [dcyfr-app](https://github.com/dcyfr-labs/dcyfr-app), [dcyfr-build](https://github.com/dcyfr-labs/dcyfr-build), [dcyfr-codes](https://github.com/dcyfr-labs/dcyfr-codes), [dcyfr-tech](https://github.com/dcyfr-labs/dcyfr-tech), and [dcyfr-work](https://github.com/dcyfr-labs/dcyfr-work).
+`dcyfr-bot-marketplace` is a Next.js 16 / React 19 site for the DCYFR bot marketplace: browse agents at `/agents`, view rankings at `/leaderboard`, and talk to an Anthropic-backed chat surface via `POST /api/chat`. It is part of the dcyfr-labs site family alongside [dcyfr-io](https://github.com/dcyfr-labs/dcyfr-io), [dcyfr-app](https://github.com/dcyfr-labs/dcyfr-app), [dcyfr-build](https://github.com/dcyfr-labs/dcyfr-build), [dcyfr-codes](https://github.com/dcyfr-labs/dcyfr-codes), [dcyfr-tech](https://github.com/dcyfr-labs/dcyfr-tech), and [dcyfr-work](https://github.com/dcyfr-labs/dcyfr-work).
 
 ## Stack
 
-- Next.js 15 (App Router) / React 19 / Tailwind CSS
+- Next.js 16 (App Router) / React 19 / Tailwind CSS
 - shadcn primitives from the `@dcyfr-labs` registry (`registry.dcyfr.ai`); shared chrome (nav, footer, page shell, theme switcher/provider) in `components/chrome/`
 - `@anthropic-ai/sdk` for the chat API route
 - Playwright visual-regression snapshots (`e2e/`)

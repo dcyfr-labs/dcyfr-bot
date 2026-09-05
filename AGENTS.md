@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-`dcyfr-bot-marketplace` is a Next.js 15 / React 19 site for the DCYFR bot marketplace.
+`dcyfr-bot-marketplace` is a Next.js 16 / React 19 site for the DCYFR bot marketplace.
 
 ## Architecture
 
