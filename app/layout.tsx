@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ThemeProvider } from '@/components/chrome/theme-provider';
@@ -7,22 +8,6 @@ import { SiteHeader, type HeaderNavItem } from '@/components/chrome/site-header'
 import { SiteFooter, type FooterLink } from '@/components/chrome/site-footer';
 import type { ChromeNavSection } from '@/components/chrome/nav-utils';
 import './globals.css';
-
-// Named for the face, not the role. The theme engine binds <body> and headings
-// to --font-body / --font-display, and the theme resolves each through a
-// --font-<role>-loaded hook; globals.css points those hooks and the `font-sans`
-// utility at this one variable. Naming it for the face means three roles can
-// share it without any Tailwind theme key pointing at another, and swapping
-// Inter out later is a one-line change here.
-//
-// The role name was also unavailable: v4 emits its theme keys as real custom
-// properties, so a next/font variable called `--font-sans` collides with the
-// theme's own --font-sans, and `--font-sans: var(--font-sans)` self-references.
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: {
@@ -118,7 +103,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-identity="slate"
-      className={`${inter.variable} theme-dcyfr-bot`}
+      className={`${GeistSans.variable} ${GeistMono.variable} theme-dcyfr-bot`}
     >
       {/* `font-sans` is gone from here. The utility sets font-family in
           @layer utilities, which outranks the engine's [data-identity] body
