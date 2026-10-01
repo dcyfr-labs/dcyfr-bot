@@ -116,12 +116,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Service unavailable' }, { status: 503, headers: rlHeaders });
   }
 
+  // The gateway serves the Anthropic Messages API at its root (/v1/messages) and names models
+  // provider/model with dotted versions; the legacy /v1/anthropic prefix now 404s.
   const client = gatewayToken
     ? new Anthropic({
         apiKey: gatewayToken,
-        baseURL: 'https://ai-gateway.vercel.sh/v1/anthropic',
+        baseURL: 'https://ai-gateway.vercel.sh',
       })
     : new Anthropic({ apiKey: anthropicKey });
+  const model = gatewayToken ? 'anthropic/claude-sonnet-4.6' : 'claude-sonnet-4-6';
   const systemPrompt = buildSystemPrompt(agent);
 
   // Streaming SSE response
@@ -133,7 +136,7 @@ export async function POST(request: NextRequest) {
 
       try {
         const anthropicStream = client.messages.stream({
-          model: 'claude-sonnet-4-6',
+          model,
           max_tokens: 1024,
           system: systemPrompt,
           messages: [{ role: 'user', content: message }],
@@ -159,7 +162,7 @@ export async function POST(request: NextRequest) {
           JSON.stringify({
             event: 'agent.chat',
             agentId,
-            model: 'claude-sonnet-4-6',
+            model,
             via: oidcToken ? 'vercel-ai-gateway-oidc' : gatewayToken ? 'vercel-ai-gateway' : 'direct',
             inputChars: message.length,
             outputChars: fullReply.length,
