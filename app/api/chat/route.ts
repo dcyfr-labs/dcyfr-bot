@@ -179,9 +179,13 @@ export async function POST(request: NextRequest) {
 
         controller.enqueue(enc.encode('data: [DONE]\n\n'));
       } catch (err) {
+        // The full upstream error stays in the server log. Visitors get a fixed message,
+        // because gateway errors carry billing links, provider routing and session ids.
         const msg = err instanceof Error ? err.message : 'Stream error';
         console.error('[chat] stream error', msg);
-        controller.enqueue(enc.encode(`data: ${JSON.stringify({ error: msg })}\n\n`));
+        controller.enqueue(
+          enc.encode(`data: ${JSON.stringify({ error: 'The agent could not reply. Please try again later.' })}\n\n`),
+        );
       } finally {
         controller.close();
       }
