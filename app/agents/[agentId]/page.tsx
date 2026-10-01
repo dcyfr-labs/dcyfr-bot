@@ -6,6 +6,7 @@ import agentsData from '@/data/agents.json';
 import reputationData from '@/data/reputation.json';
 import { CapabilityBadge } from '@/components/CapabilityBadge';
 import { ChatInterface } from '@/components/ChatInterface';
+import { isChatEnabled } from '@/lib/chat-config';
 
 const agents = agentsData as Agent[];
 const reputation = reputationData as ReputationEntry[];
@@ -139,7 +140,13 @@ export default async function AgentDetailPage({ params }: PageProps) {
 
       <div>
         <h2 className="text-lg font-semibold text-foreground mb-4">Chat with {agent.name}</h2>
-        <ChatInterface agentId={agent.agentId} />
+        {isChatEnabled() ? (
+          <ChatInterface agentId={agent.agentId} />
+        ) : (
+          <p className="bg-card/20 border border-border/30 rounded-xl px-4 py-6 text-sm text-muted-foreground text-center">
+            Live chat is paused for now. Check back soon.
+          </p>
+        )}
       </div>
     </div>
   );
