@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { getVercelOidcToken } from '@vercel/oidc';
 import agentsData from '@/data/agents.json';
 import type { Agent } from '@/lib/types';
 import { buildSystemPrompt } from '@/lib/agent-system-prompt';
@@ -102,19 +103,22 @@ export async function POST(request: NextRequest) {
   }
 
   // Client init — prefer Vercel AI Gateway (BYOK, automatic caching) when available.
-  // Env vars: AI_GATEWAY_API_KEY (Vercel team gateway key) + ANTHROPIC_API_KEY (BYOK registered
-  // at vercel.com/team/settings/ai-gateway). Falls back to direct Anthropic API.
-  const gatewayKey = process.env.AI_GATEWAY_API_KEY;
+  // Deployed, the gateway authenticates with the deployment's short-lived Vercel OIDC token,
+  // so no long-lived gateway key lives in the project env. AI_GATEWAY_API_KEY is the local-dev
+  // fallback; ANTHROPIC_API_KEY (the BYOK key registered at vercel.com/team/settings/ai-gateway)
+  // is the direct-API fallback.
+  const oidcToken = await getVercelOidcToken().catch(() => undefined);
+  const gatewayToken = oidcToken || process.env.AI_GATEWAY_API_KEY;
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
 
-  if (!gatewayKey && !anthropicKey) {
-    console.error('[chat] No API key configured (AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY)');
+  if (!gatewayToken && !anthropicKey) {
+    console.error('[chat] No credential (Vercel OIDC, AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY)');
     return NextResponse.json({ error: 'Service unavailable' }, { status: 503, headers: rlHeaders });
   }
 
-  const client = gatewayKey
+  const client = gatewayToken
     ? new Anthropic({
-        apiKey: gatewayKey,
+        apiKey: gatewayToken,
         baseURL: 'https://ai-gateway.vercel.sh/v1/anthropic',
       })
     : new Anthropic({ apiKey: anthropicKey });
@@ -156,7 +160,7 @@ export async function POST(request: NextRequest) {
             event: 'agent.chat',
             agentId,
             model: 'claude-sonnet-4-6',
-            via: gatewayKey ? 'vercel-ai-gateway' : 'direct',
+            via: oidcToken ? 'vercel-ai-gateway-oidc' : gatewayToken ? 'vercel-ai-gateway' : 'direct',
             inputChars: message.length,
             outputChars: fullReply.length,
             outputTokens,

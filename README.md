@@ -38,7 +38,7 @@ This is the only site in the family with **runtime secrets**. `/api/chat` needs 
 
 | Variable | Purpose |
 |---|---|
-| `AI_GATEWAY_API_KEY` | Preferred — Vercel AI Gateway key (BYOK, automatic caching; routes via `ai-gateway.vercel.sh`) |
+| `AI_GATEWAY_API_KEY` | Local dev only — Vercel AI Gateway key. Deployed builds authenticate to the gateway with the project's Vercel OIDC token (`@vercel/oidc`), so do not set it in the Vercel project env |
 | `ANTHROPIC_API_KEY` | Fallback — direct Anthropic API |
 
 With neither set, `/api/chat` returns 503; the rest of the site works without them. Locally, resolve secrets through 1Password per workspace policy (e.g. `op run --env-file=.env -- npm run dev`) — never hardcode or commit keys. In production they are configured as Vercel project environment variables.
