@@ -41,7 +41,14 @@ This is the only site in the family with **runtime secrets**. `/api/chat` needs 
 | `AI_GATEWAY_API_KEY` | Local dev only — Vercel AI Gateway key. Deployed builds authenticate to the gateway with the project's Vercel OIDC token (`@vercel/oidc`), so do not set it in the Vercel project env |
 | `ANTHROPIC_API_KEY` | Fallback — direct Anthropic API |
 
-With neither set, `/api/chat` returns 503; the rest of the site works without them. Locally, resolve secrets through 1Password per workspace policy (e.g. `op run --env-file=.env -- npm run dev`) — never hardcode or commit keys. In production they are configured as Vercel project environment variables.
+Two non-secret switches (logic in `lib/chat-config.ts`):
+
+| Variable | Purpose |
+|---|---|
+| `CHAT_ENABLED` | Chat is **off in Production** until the AI Gateway has paid credits (the free tier refuses Anthropic models). Set `true` in the Production env and redeploy to turn it on; Preview and local dev are always on |
+| `CHAT_MODEL` | Gateway model override for testing, e.g. `inclusionai/ling-3.1-flash-free` in the Preview env. Ignored in Production, because free models carry no no-training or zero-retention guarantee |
+
+With neither credential set, `/api/chat` returns 503; the rest of the site works without them. Locally, resolve secrets through 1Password per workspace policy (e.g. `op run --env-file=.env -- npm run dev`) — never hardcode or commit keys. In production they are configured as Vercel project environment variables.
 
 ## Design-token & scaffold contract
 

@@ -5,6 +5,7 @@ import { getVercelOidcToken } from '@vercel/oidc';
 import agentsData from '@/data/agents.json';
 import type { Agent } from '@/lib/types';
 import { buildSystemPrompt } from '@/lib/agent-system-prompt';
+import { DIRECT_ANTHROPIC_MODEL, gatewayModel, isChatEnabled } from '@/lib/chat-config';
 
 interface ChatRequestBody {
   agentId: string;
@@ -52,6 +53,10 @@ function getClientIp(request: NextRequest): string {
 }
 
 export async function POST(request: NextRequest) {
+  if (!isChatEnabled()) {
+    return NextResponse.json({ error: 'Chat is paused' }, { status: 503 });
+  }
+
   const startMs = Date.now();
   const ip = getClientIp(request);
 
@@ -124,7 +129,7 @@ export async function POST(request: NextRequest) {
         baseURL: 'https://ai-gateway.vercel.sh',
       })
     : new Anthropic({ apiKey: anthropicKey });
-  const model = gatewayToken ? 'anthropic/claude-sonnet-4.6' : 'claude-sonnet-4-6';
+  const model = gatewayToken ? gatewayModel() : DIRECT_ANTHROPIC_MODEL;
   const systemPrompt = buildSystemPrompt(agent);
 
   // Streaming SSE response
