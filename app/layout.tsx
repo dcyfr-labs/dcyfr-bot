@@ -129,7 +129,7 @@ export default function RootLayout({
           <main id="main-content" className="flex-1 pt-18">
             {children}
           </main>
-          <SiteFooter brand="DCYFR" links={FOOTER} />
+          <SiteFooter brand="DCYFR Labs" links={FOOTER} />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
