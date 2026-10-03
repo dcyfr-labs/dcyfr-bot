@@ -1,0 +1,21 @@
+{
+  "repository": "dcyfr-labs/dcyfr-bot",
+  "head_sha": "ae76abf619ac8770971a18ba34f62e8294c6db97",
+  "ref": "refs/heads/fix/dcyfr-labs-entity-name",
+  "base_url": "https://dcyfr-jrb2i7md6-dcyfr-labs.vercel.app",
+  "deployment": {
+    "id": 6826518549,
+    "sha": "ae76abf619ac8770971a18ba34f62e8294c6db97",
+    "environment": "Preview",
+    "created_at": "2026-10-03T10:34:35Z"
+  },
+  "runner_os": "Linux",
+  "runner_arch": "X64",
+  "run_url": "https://github.com/dcyfr-labs/dcyfr-bot/actions/runs/37116993224",
+  "snapshots": [
+    "agents-desktop.png",
+    "agents-mobile.png",
+    "home-desktop.png",
+    "home-mobile.png"
+  ]
+}
