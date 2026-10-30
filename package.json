@@ -49,6 +49,7 @@
   "overrides": {
     "cookie": "^0.7.0",
     "path-to-regexp": "^6.3.0",
-    "postcss": "$postcss"
+    "postcss": "$postcss",
+    "zod": "^4.6.7"
   }
 }
