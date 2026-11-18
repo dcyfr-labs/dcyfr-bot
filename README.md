@@ -9,6 +9,7 @@ Bot marketplace and agent directory for the DCYFR ecosystem, live at **[dcyfr.bo
 - Next.js 16 (App Router) / React 19 / Tailwind CSS
 - shadcn primitives from the `@dcyfr-labs` registry (`registry.dcyfr.ai`); shared chrome (nav, footer, page shell, theme switcher/provider) in `components/chrome/`
 - `@anthropic-ai/sdk` for the chat API route
+- Sentry instrumentation through `@sentry/nextjs`
 - Playwright visual-regression snapshots (`e2e/`)
 
 ## Development
@@ -23,7 +24,9 @@ npm run dev        # http://localhost:3304
 | `npm run dev` / `npm run start` | Dev / production server on port **3304** |
 | `npm run build` | Production build |
 | `npm run lint` / `npm run typecheck` | ESLint / `tsc --noEmit` |
-| `npm run test:snapshots` (`:update`) | Visual-regression snapshots (chromium) |
+| `npm run test:contrast` | Contrast spec (chromium) |
+| `npm run test:snapshots` (`:update`, `:rebaseline`) | Visual-regression snapshots (chromium) |
+| `npm run check:theme-wiring` | Verifies the theme files, the `globals.css` imports and the `data-identity` stamp |
 
 ## Routes
 
@@ -31,6 +34,10 @@ npm run dev        # http://localhost:3304
 - `/agents`, `/agents/[agentId]` — agent directory and detail pages
 - `/leaderboard` — agent rankings
 - `POST /api/chat` — Anthropic-backed chat (rate-limited; see env vars below)
+- `/privacy`: privacy notice
+- `/robots.txt`, `/sitemap.xml`: generated from `app/robots.ts` and `app/sitemap.ts`
+- `/indexnow.txt`: IndexNow key file; the route returns 404 when `INDEXNOW_KEY` is unset
+- `/.well-known/security.txt`: RFC 9116 security contact
 
 ## Environment variables
 
@@ -48,11 +55,13 @@ Two non-secret switches (logic in `lib/chat-config.ts`):
 | `CHAT_ENABLED` | Chat is **off in Production** until the AI Gateway has paid credits (the free tier refuses Anthropic models). Set `true` in the Production env and redeploy to turn it on; Preview and local dev are always on |
 | `CHAT_MODEL` | Gateway model override for testing, e.g. `inclusionai/ling-3.1-flash-free` in the Preview env. Ignored in Production, because free models carry no no-training or zero-retention guarantee |
 
+Optional variables shared with the other sites: `NEXT_PUBLIC_SENTRY_DSN` (client Sentry), `SENTRY_DSN` (server and edge; falls back to `NEXT_PUBLIC_SENTRY_DSN`), `SENTRY_ORG` / `SENTRY_PROJECT` (build-time source-map upload; default to `dcyfr-labs` / `dcyfr-bot`) and `INDEXNOW_KEY` (served at `/indexnow.txt`).
+
 With neither credential set, `/api/chat` returns 503; the rest of the site works without them. Locally, resolve secrets through 1Password per workspace policy (e.g. `op run --env-file=.env -- npm run dev`) — never hardcode or commit keys. In production they are configured as Vercel project environment variables.
 
 ## Design-token & scaffold contract
 
-This site follows the `dcyfr-site-scaffold` contract: colors, spacing, radii, and typography resolve via CSS variables — no hardcoded design tokens. Local ESLint rules in `eslint-local-rules/` enforce this and the `design-tokens.yml` workflow gates every PR. From the workspace root, `npm run audit:sites` checks scaffold compliance across the site family.
+This site follows the `dcyfr-site-scaffold` contract: colors, spacing, radii, and typography resolve via CSS variables. Local ESLint rules in `eslint-local-rules/` enforce part of this: `no-hardcoded-colors`, `no-deprecated-design-tokens` and `no-legacy-dcyfr-palette` are errors, while `no-hardcoded-spacing` and `no-hardcoded-typography` are switched off in `eslint.config.mjs`. The `design-tokens.yml` workflow gates every PR. From the workspace root, `npm run audit:sites` checks scaffold compliance across the site family.
 
 ## CI
 
